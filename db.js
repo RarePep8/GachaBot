@@ -1,5 +1,5 @@
 const sqlite3 = require('sqlite3')
-class Database {
+exports.Database = class Database {
 	constructor(dbPath) {
 		this.db = new sqlite3.Database(dbPath, (err) => {
 			if (err) {
@@ -9,12 +9,14 @@ class Database {
 			}	
 		})
 	}
-	createTableIfNotExists(tableName, columnCreationArgs) {
-		const sql = `
-		CREATE TABLE IF NOT EXISTS ${tableName} (${columnCreationArgs.join()})`
+	run(sql){
 		return this.db.run(sql);
 	}
+	// createTableIfNotExists(tableName, columnCreationArgs) {
+	// 	const sql = `
+	// 	CREATE TABLE IF NOT EXISTS ${tableName} (${columnCreationArgs.join()})`
+	// 	return this.db.run(sql);
+	// }
 
 }
-const db = new Database('./test.db')
-exports.instance = db;
+
